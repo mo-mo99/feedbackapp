@@ -58,11 +58,11 @@ class AuthController extends Controller
     
     public function dashboard()
     {
-        if(Auth::check()){
-            return view('main');
+        if(Auth::user()->role == '0'){
+            return redirect('feedback');
+        } else {
+            return redirect('admin');
         }
-  
-        return redirect("login")->withSuccess('You are not allowed to access');
     }
     
     public function signOut() {
