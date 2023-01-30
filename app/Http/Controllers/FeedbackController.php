@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Jobs\MailSender;
+use App\Mail\FeedbackMailer;
+use Illuminate\Support\Facades\Mail;
+
 
 class FeedbackController extends Controller
 {
@@ -45,7 +49,7 @@ class FeedbackController extends Controller
             return redirect('feedback')->with('failed',"You already sent feedback in last 24 hours");
 
         } else {
-            
+
             $data = $request->input();
 			try{
 				$feedback = new Feedback;
@@ -56,6 +60,7 @@ class FeedbackController extends Controller
 				$feedback->text = $data['text'];
 				$feedback->file = $filePath;
 				$feedback->save();
+                MailSender::dispatch($feedback);
 				return redirect('feedback')->with('status',"Insert successfully");
 			}
 			catch(Exception $e){
@@ -71,6 +76,8 @@ class FeedbackController extends Controller
             ->where('user_id', $user_id)
             ->where('created_at', '>=', Carbon::now()->subDays(1))
             ->get()->last();
-        return $feedback;      
+        return false;      
     }
+
+    
 }
