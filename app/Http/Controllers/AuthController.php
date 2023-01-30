@@ -21,7 +21,7 @@ class AuthController extends Controller
    
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
+            return redirect()->intended('feedback')
                         ->withSuccess('Signed in');
         }
   
@@ -44,7 +44,7 @@ class AuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
          
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        return redirect("feedback")->withSuccess('You have signed-in');
     }
 
     public function create(array $data)

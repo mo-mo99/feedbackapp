@@ -15,3 +15,4 @@ Route::post('custom-registration', [AuthController::class, 'customRegistration']
 Route::get('signout', [AuthController::class, 'signOut'])->name('signout');
 Route::get('admin', [FeedbackController::class, 'admin'])->name('adminpanel')->middleware('isAdmin');
 Route::get('feedback', [FeedbackController::class, 'feedback'])->name('feedback-page')->middleware('auth');
+Route::post('send-feedback', [FeedbackController::class, 'sendFeedback'])->name('send-feedback');
