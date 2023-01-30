@@ -76,7 +76,7 @@ class FeedbackController extends Controller
             ->where('user_id', $user_id)
             ->where('created_at', '>=', Carbon::now()->subDays(1))
             ->get()->last();
-        return false;      
+        return $feedback;      
     }
 
     
